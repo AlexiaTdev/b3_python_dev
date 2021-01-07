@@ -70,6 +70,7 @@ class MainWindow(qtw.QWidget):
 			#self.checkbox.setText(str(len(self.taskList)))
 
 		self.input1 = qtw.QLineEdit()
+		self.input1.insert("")
 
 		#stockage de l'ensemble [checkbox, input] nouvellement créé dans la liste tasklist
 		self.taskList.append([self.checkbox, self.input1])
@@ -114,8 +115,10 @@ class MainWindow(qtw.QWidget):
 			self.combobox.addItem(i)
 	
 	def loadSelectedTaskList(self):
-		for element in self.taskListValues :
-			self.taskListValues.pop(element)
+		self.taskListValues.clear()
+		MainWindow.discardLastTaskList(self)
+		#for element in self.taskListValues :
+		#	self.taskListValues.pop(element)
 
 		with open(self.combobox.currentText()) as json_file :
 			self.taskListValues = json.load(json_file)
@@ -136,12 +139,12 @@ class MainWindow(qtw.QWidget):
 		MainWindow.display(self)
 	
 	def saveCurrentTaskList(self):
-		for element in self.taskListValues :
-			self.taskListValues.pop(element)
+		##AFAIRE-verifier si le fichier contient des donnees
+		self.taskListValues.clear()
+		print(self.taskListValues)
 		for element1 in self.taskList :
 			self.taskListValues.append([element1[0].isChecked(), element1[1].text()])
 		with open(self.combobox.currentText(), 'w') as outfile:
-			del json
 			json.dump(self.taskListValues, outfile)
 
 	

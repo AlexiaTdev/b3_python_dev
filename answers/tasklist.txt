@@ -1,1 +1,1 @@
-[[false, "az"], [true, "edc"], [true, "("], [false, "-(yu00e8-"]]
+[[false, "nyh"], [true, "ez"], [true, "r"], [false, "t'(-"], [false, "rt-"], [false, ""], [false, ""], [false, ""], [false, "azaz\""]]
