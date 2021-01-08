@@ -2,6 +2,7 @@ import PyQt5.QtWidgets as qtw
 import json
 import os
 import glob
+import sip
 
 
 class MainWindow(qtw.QWidget):
@@ -102,9 +103,14 @@ class MainWindow(qtw.QWidget):
 			i=i+1
 	
 	def discardLastTaskList(self):
-		#on retire le parent de l'ensemble des elements du layout de container2 (a pour effet de detruire l element)
+		#on retire le parent de l'ensemble des elements du layout de container2 (a pour effet de cacher l element) PRBLM toujours présent mais on le vois pas
+		
 		for i in reversed(range(self.container2.layout().count())) :
 			self.container2.layout().itemAt(i).widget().setParent(None)
+			#self.container2.layout().itemAt(i).widget().pop(i)
+			#self.container2.layout().removeWidget(self.container2.layout().itemAt(i).widget())
+			#self.container2.layout().itemAt(i).widget().deleteLater()
+			#self.container2.layout().itemAt(i).widget().setParent(None)
 
 
 
@@ -122,7 +128,7 @@ class MainWindow(qtw.QWidget):
 
 		with open(self.combobox.currentText()) as json_file :
 			self.taskListValues = json.load(json_file)
-		
+		json_file.close
 		MainWindow.convertTaskListValues_to_taskList(self)
 	
 	def convertTaskListValues_to_taskList(self) :
@@ -146,6 +152,7 @@ class MainWindow(qtw.QWidget):
 			self.taskListValues.append([element1[0].isChecked(), element1[1].text()])
 		with open(self.combobox.currentText(), 'w') as outfile:
 			json.dump(self.taskListValues, outfile)
+		outfile.close
 
 	
 
